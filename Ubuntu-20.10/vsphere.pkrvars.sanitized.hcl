@@ -1,3 +1,5 @@
+#Rename this to vsphere.pkvars.hcl and fill out secure info.
+
 ##################################################################################
 # VARIABLES
 ##################################################################################
@@ -6,8 +8,8 @@
 
 vcenter_username                = ""
 vcenter_password                = ""
-ssh_username                    = ""
-ssh_password                    = ""
+ssh_username                    = "ubuntu"
+ssh_password                    = "ubuntu"
 
 # vSphere Objects
 

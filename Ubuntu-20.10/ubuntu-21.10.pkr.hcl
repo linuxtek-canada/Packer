@@ -81,7 +81,7 @@ variable "iso_path" {
 variable iso_file {
   type        = string
   description = "The file name of the guest operating system ISO image installation media."
-  # https://releases.ubuntu.com/21.10/ubuntu-21.10-live-server-amd64.iso
+  # https://releases.ubuntu.com/21.10/ubuntu-21.10-live-server-amd64.iso  
   default = ""
 }
 
@@ -241,14 +241,11 @@ source "vsphere-iso" "linux-ubuntu-server" {
   boot_order     = "disk,cdrom"
   boot_wait      = var.vm_boot_wait
   boot_command = [
-    "<esc><esc><esc>",
+    "c",
+    "linux /casper/vmlinuz \"ds=nocloud-net;seedfrom=http://{{.HTTPIP}}:{{.HTTPPort}}/\" autoinstall quiet --- ",
     "<enter><wait>",
-    "/casper/vmlinuz ",
-    "root=/dev/sr0 ",
-    "initrd=/casper/initrd ",
-    "autoinstall ",
-    "ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/",
-    "<enter>"
+    "initrd /casper/initrd<enter><wait>",
+    "boot<enter>",
   ]
   ip_wait_timeout        = "20m"
   ssh_password           = var.ssh_password
