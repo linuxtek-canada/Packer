@@ -1,0 +1,46 @@
+#cloud-config
+autoinstall:
+    version: 1
+    early-commands:
+        # Stop ssh for packer
+        - sudo systemctl stop ssh
+    locale: en_US
+    keyboard:
+        layout: en
+        variant: us
+    
+    identity:
+        hostname: ubuntu-server
+        username: ubuntu
+        password: '$6$rounds=4096$9DdlGlPlIY/UNv5$RqRAgyTFqHYSjInPbrKI4czzy9.yEbfqnF9VmNA.c99qI1anHr9EsuYdX5QpQlwUhWOX9cWMZq4eeLqkBcCHX.'
+
+    ssh:
+        install-server: true
+        allow-pw: true    
+    
+    packages:
+    - cloud-init
+    - curl
+    - net-tools
+    - open-vm-tools
+    - openssh-server
+    
+    storage:
+        layout:
+            name: direct
+    apt:
+        primary:
+            - arches: [amd64]
+              uri: "http://ro.archive.ubuntu.com/ubuntu/"
+              
+    user-data:
+      disable_root: false
+      package_update: true
+      package_upgrade: true
+      package_reboot_if_required: true      
+
+    late-commands:
+    - echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/ubuntu
+    - curtin in-target --target=/target -- chmod 440 /etc/sudoers.d/ubuntu
+    - curtin in-target --target=/target -- apt-get update
+    - curtin in-target --target=/target -- apt-get upgrade --yes
