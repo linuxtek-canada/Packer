@@ -11,7 +11,7 @@ http_directory = "http"
 vm_guest_os_family          = "linux"
 vm_guest_os_vendor          = "ubuntu"
 vm_guest_os_member          = "server"
-vm_guest_os_version         = "20-10-lts"
+vm_guest_os_version         = "21-10-lts"
 vm_guest_os_type            = "ubuntu64Guest"
 vm_version                  = 19
 vm_firmware                 = "bios"
@@ -31,4 +31,4 @@ iso_checksum                = "e84f546dfc6743f24e8b1e15db9cc2d2c698ec57d9adfb852
 
 # Scripts
 
-shell_scripts               = ["./scripts/setup_ubuntu2010.sh"]
+shell_scripts               = ["./scripts/setup_ubuntu2110.sh"]
