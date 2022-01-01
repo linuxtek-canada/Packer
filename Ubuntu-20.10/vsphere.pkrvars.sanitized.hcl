@@ -40,5 +40,4 @@ vcenter_network                 = ""
 vcenter_folder                  = ""
 
 #The folder where the Ubuntu 21.10 ISO is stored on the datastore.
-#If not present, it will be downloaded via http
 iso_path                        = ""
