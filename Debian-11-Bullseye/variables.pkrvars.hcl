@@ -9,10 +9,10 @@ http_directory = "http"
 # Virtual Machine Settings
 
 vm_guest_os_family      = "linux"
-vm_guest_os_vendor      = "ubuntu"
+vm_guest_os_vendor      = "debian"
 vm_guest_os_member      = "server"
-vm_guest_os_version     = "21-10-lts"
-vm_guest_os_type        = "ubuntu64Guest"
+vm_guest_os_version     = "11"
+vm_guest_os_type        = "debian11_64Guest"
 vm_version              = 19
 vm_firmware             = "bios"
 vm_cdrom_type           = "sata"
@@ -26,9 +26,9 @@ vm_boot_wait            = "2s"
 
 # ISO Objects
 
-iso_file     = "ubuntu-21.10-live-server-amd64.iso"
-iso_checksum = "e84f546dfc6743f24e8b1e15db9cc2d2c698ec57d9adfb852971772d1ce692d4"
+iso_file     = "debian-11.2.0-amd64-DVD-1.iso"
+iso_checksum = "022370f066bc91b2cdac3837ff5fa9f3822c5afb2fc34f68084416079fe5a408"
 
 # Scripts
 
-shell_scripts = ["./scripts/setup_ubuntu2110.sh"]
+shell_scripts = ["./scripts/setup_debian.sh"]

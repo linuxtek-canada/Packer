@@ -81,7 +81,7 @@ variable "iso_path" {
 variable iso_file {
   type        = string
   description = "The file name of the guest operating system ISO image installation media."
-  # https://releases.ubuntu.com/21.10/ubuntu-21.10-live-server-amd64.iso  
+  # http://debian.mirror.iweb.ca/debian-cd/11.2.0/amd64/iso-dvd/debian-11.2.0-amd64-DVD-1.iso
   default = ""
 }
 
@@ -202,7 +202,7 @@ locals {
 # SOURCE
 ##################################################################################
 
-source "vsphere-iso" "linux-ubuntu-server" {
+source "vsphere-iso" "linux-debian-server" {
   vcenter_server       = var.vcenter_server
   username             = var.vcenter_username
   password             = var.vcenter_password
@@ -241,11 +241,22 @@ source "vsphere-iso" "linux-ubuntu-server" {
   boot_order     = "disk,cdrom"
   boot_wait      = var.vm_boot_wait
   boot_command = [
-    "c",
-    "linux /casper/vmlinuz \"ds=nocloud-net;seedfrom=http://{{.HTTPIP}}:{{.HTTPPort}}/\" autoinstall quiet --- ",
-    "<enter><wait>",
-    "initrd /casper/initrd<enter><wait>",
-    "boot<enter>",
+    "<esc><esc><wait>",
+    "install <wait>",
+    " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg <wait>",
+    "debian-installer=en_US.UTF-8 <wait>",
+    "auto <wait>",
+    "locale=en_US.UTF-8 <wait>",
+    "kbd-chooser/method=us <wait>",
+    "keyboard-configuration/xkb-keymap=us <wait>",
+    "netcfg/get_hostname={{ .Name }} <wait>",
+    "netcfg/get_domain=install <wait>",
+    "fb=false <wait>",
+    "debconf/frontend=noninteractive <wait>",
+    "console-setup/ask_detect=false <wait>",
+    "console-keymaps-at/keymap=us <wait>",
+    "grub-installer/bootdev=/dev/sda <wait>",
+    "<enter><wait>"
   ]
   ip_wait_timeout        = "20m"
   ssh_password           = var.ssh_password
@@ -263,7 +274,7 @@ source "vsphere-iso" "linux-ubuntu-server" {
 
 build {
   sources = [
-  "source.vsphere-iso.linux-ubuntu-server"]
+  "source.vsphere-iso.linux-debian-server"]
   provisioner "shell" {
     execute_command = "echo '${var.ssh_password}' | {{.Vars}} sudo -S -E bash '{{.Path}}'"
     environment_vars = [
