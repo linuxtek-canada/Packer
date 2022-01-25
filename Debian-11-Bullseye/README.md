@@ -18,3 +18,7 @@ Run the following to build template using Packer:
 packer build -var-file variables.pkrvars.hcl -var-file vsphere.pkrvars.hcl debian11-bullseye.pkr.hcl
 ```
 
+## Updates
+
+1/24/2021:  Modified setup_debian.sh to generate an SSH key and enable sshd service to start on boot.
+Otherwise you get this error when attempting to start sshd: "sshd: no hostkeys available -- exiting"

@@ -10,16 +10,28 @@ fi
 if [ -f /var/log/lastlog ]; then
 cat /dev/null > /var/log/lastlog
 fi
+
 # Cleans SSH keys.
 echo '> Cleaning SSH keys ...'
 rm -f /etc/ssh/ssh_host_*
+
+#Generate a new SSH key for use with Terraform
+echo '> Generating new SSH key ...'
+ssh-keygen -A
+
+#Enable SSHD to start on boot
+echo '> Enabling sshd on startup ...'
+systemctl enable sshd
+
 # Sets hostname to localhost.
 echo '> Setting hostname to localhost ...'
 cat /dev/null > /etc/hostname
 hostnamectl set-hostname localhost
+
 # Cleans apt-get.
 echo '> Cleaning apt-get ...'
 apt-get clean
+
 # Cleans the machine-id.
 echo '> Cleaning the machine-id ...'
 truncate -s 0 /etc/machine-id
