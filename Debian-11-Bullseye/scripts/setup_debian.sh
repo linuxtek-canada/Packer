@@ -28,9 +28,17 @@ echo '> Setting hostname to localhost ...'
 cat /dev/null > /etc/hostname
 hostnamectl set-hostname localhost
 
-# Cleans apt-get.
+# Remove lines in /etc/apt/sources.list for CDROM
+echo '> Removing CDROM references from apt sources.list'
+sed -i '/cdrom/d' /etc/apt/sources.list
+
+# Perform apt update and apt upgrade
+echo '> Performing apt update/upgrade'
+apt update && apt -y upgrade
+
+# Autoremove and cleans apt-get.
 echo '> Cleaning apt-get ...'
-apt-get clean
+apt-get autoremove && apt-get clean
 
 # Cleans the machine-id.
 echo '> Cleaning the machine-id ...'
